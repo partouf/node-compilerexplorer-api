@@ -71,7 +71,7 @@ export interface ICompileApiPostData {
 export interface ICompiler {
     type: string;
     version: string;
-    compile(code: string, compilerArgs: Array<string> | null, options: ICompilerOptions | null, filters: ICompilerFilters | null): Promise<ICompilationResult>;
+    compile(code: string, compilerArgs?: Array<string>, options?: ICompilerOptions, filters?: ICompilerFilters): Promise<ICompilationResult>;
 }
 
 export interface ICompilers {

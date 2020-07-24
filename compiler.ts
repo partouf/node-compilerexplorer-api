@@ -26,7 +26,7 @@ export class Compiler implements ICompiler {
         }
     }
 
-    public async compile(code: string, compilerArgs: string[] | null, options: ICompilerOptions | null, filters: ICompilerFilters | null): Promise<ICompilationResult> {
+    public async compile(code: string, compilerArgs?: string[], options?: ICompilerOptions, filters?: ICompilerFilters): Promise<ICompilationResult> {
         return new Promise((resolve, reject) => {
             const postdata: ICompileApiPostData = {
                 source: code,
