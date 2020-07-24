@@ -1,5 +1,6 @@
 import { Compilers } from "./compilers";
-import { IApi, IApiOptions, ICompilers } from "CompilerExplorer";
+import { IApi, ICompilers, IApiOptions } from "CompilerExplorer";
+export * from "CompilerExplorer";
 
 export class Api implements IApi {
     public compilers: ICompilers;
