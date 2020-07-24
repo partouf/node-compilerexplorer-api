@@ -1,5 +1,5 @@
 import { ICompiler, ICompilerOptions, ICompilerFilters, ICompilationResult, IApiOptions, ICompilerDetails,
-    ICompileApiPostData, ICompileApiPostDataOptions } from "./interfaces";
+    ICompileApiPostData, ICompileApiPostDataOptions, IExecuteParameters } from "./interfaces";
 import http from "http";
 import https from "https";
 
@@ -30,7 +30,7 @@ export class Compiler implements ICompiler {
         return this.details.supportsExecute;
     }
 
-    public async compile(code: string, compilerArgs?: string[], options?: ICompilerOptions, filters?: ICompilerFilters): Promise<ICompilationResult> {
+    public async compile(code: string, compilerArgs?: string[], options?: ICompilerOptions, filters?: ICompilerFilters, execParams?: IExecuteParameters): Promise<ICompilationResult> {
         return new Promise((resolve, reject) => {
             const postdata: ICompileApiPostData = {
                 source: code,
@@ -45,6 +45,7 @@ export class Compiler implements ICompiler {
             if (compilerArgs) postdata.options.userArguments = compilerArgs?.map((arg) => '"' + arg + '"').join(' ');
             if (options) postdata.options.compilerOptions = options;
             if (filters) postdata.options.filters = filters;
+            if (execParams) postdata.options.executeParameters = execParams;
 
             const postdatastr = JSON.stringify(postdata);
 
@@ -71,5 +72,14 @@ export class Compiler implements ICompiler {
             req.write(postdatastr);
             req.end();
         });
+    }
+
+    public async execute(code: string, compilerArgs?: string[], execParams?: IExecuteParameters): Promise<ICompilationResult> {
+        return this.compile(code, compilerArgs, {
+            skipAsm: true,
+            executorRequest: true
+        }, {
+            execute: true
+        }, execParams);
     }
 }

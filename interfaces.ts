@@ -4,15 +4,15 @@ export interface ICompilerOptions {
 }
 
 export interface ICompilerFilters {
-    binary: boolean;
-    commentOnly: boolean;
-    demangle: boolean;
-    directives: boolean;
-    execute: boolean;
-    intel: boolean;
-    labels: boolean;
-    libraryCode: boolean;
-    trim: boolean;
+    binary?: boolean;
+    commentOnly?: boolean;
+    demangle?: boolean;
+    directives?: boolean;
+    execute?: boolean;
+    intel?: boolean;
+    labels?: boolean;
+    libraryCode?: boolean;
+    trim?: boolean;
 }
 
 export interface IExecuteParameters {
@@ -61,6 +61,7 @@ export interface ICompileApiPostDataOptions {
     userArguments: string;
     compilerOptions: ICompilerOptions;
     filters: ICompilerFilters;
+    executeParameters?: IExecuteParameters;
 }
 
 export interface ICompileApiPostData {
@@ -73,7 +74,8 @@ export interface ICompiler {
     type: string;
     version: string;
     supportsExecution(): boolean;
-    compile(code: string, compilerArgs?: Array<string>, options?: ICompilerOptions, filters?: ICompilerFilters): Promise<ICompilationResult>;
+    compile(code: string, compilerArgs?: Array<string>, options?: ICompilerOptions, filters?: ICompilerFilters, execParams?: IExecuteParameters): Promise<ICompilationResult>;
+    execute(code: string, compilerArgs?: string[], execParams?: IExecuteParameters): Promise<ICompilationResult>;
 }
 
 export interface ICompilers {
