@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "main": "dist/api.js",
-  "types": "dist/api.d.ts",
+  "types": "dist/interfaces.d.ts",
   "directories": {
     "doc": "docs"
   },
