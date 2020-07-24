@@ -6,12 +6,15 @@ import https from "https";
 export class Compiler implements ICompiler {
     public version: string;
     public type: string;
-    private id: string;
+    public id: string;
+    public name: string;
     private web: typeof https | typeof http;
 
     public constructor(public apiOptions: IApiOptions, public details: ICompilerDetails) {
-        this.id = details.id;
         this.web = this.apiOptions.url.startsWith('https://') ? https : http;
+
+        this.id = details.id;
+        this.name = details.name;
 
         if (details.compilerType) {
             this.type = details.compilerType;
