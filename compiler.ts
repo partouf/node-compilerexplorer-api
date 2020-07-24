@@ -1,5 +1,5 @@
 import { ICompiler, ICompilerOptions, ICompilerFilters, ICompilationResult, IApiOptions, ICompilerDetails,
-    ICompileApiPostData, ICompileApiPostDataOptions } from "CompilerExplorer";
+    ICompileApiPostData, ICompileApiPostDataOptions } from "./interfaces";
 import http from "http";
 import https from "https";
 

@@ -1,4 +1,4 @@
-import { ICompilers, ICompiler, IApiOptions } from "CompilerExplorer";
+import { ICompilers, ICompiler, IApiOptions } from "./interfaces";
 import { Compiler } from "./compiler";
 import http from "http";
 import https from "https";

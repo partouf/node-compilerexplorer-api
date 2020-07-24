@@ -2,8 +2,8 @@
   "name": "compilerexplorer-api",
   "version": "0.0.1",
   "description": "",
-  "main": "dist/api.js",
-  "types": "dist/api.d.ts",
+  "main": "dist/exports.js",
+  "types": "dist/exports.d.ts",
   "directories": {
     "doc": "docs"
   },
