@@ -26,6 +26,10 @@ export class Compiler implements ICompiler {
         }
     }
 
+    public supportsExecution(): boolean {
+        return this.details.supportsExecute;
+    }
+
     public async compile(code: string, compilerArgs?: string[], options?: ICompilerOptions, filters?: ICompilerFilters): Promise<ICompilationResult> {
         return new Promise((resolve, reject) => {
             const postdata: ICompileApiPostData = {

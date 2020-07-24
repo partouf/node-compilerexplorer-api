@@ -54,6 +54,7 @@ export interface ICompilerDetails {
     compilerType: string;
     group: string;
     semver: string;
+    supportsExecute: boolean;
 }
 
 export interface ICompileApiPostDataOptions {
@@ -71,6 +72,7 @@ export interface ICompileApiPostData {
 export interface ICompiler {
     type: string;
     version: string;
+    supportsExecution(): boolean;
     compile(code: string, compilerArgs?: Array<string>, options?: ICompilerOptions, filters?: ICompilerFilters): Promise<ICompilationResult>;
 }
 
