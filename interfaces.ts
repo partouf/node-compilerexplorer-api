@@ -41,12 +41,17 @@ export interface IResultAsmLine {
     labels: Array<string>
 }
 
-export interface ICompilationResult {
+export interface ICompilationBaseResult {
     code: number;
     stdout: Array<IResultLine>;
     stderr: Array<IResultLine>;
-    asmsize: number;
-    asm: Array<IResultAsmLine>;
+    asmsize?: number;
+    asm?: Array<IResultAsmLine>;
+}
+
+export interface ICompilationResult extends ICompilationBaseResult {
+    didExecute?: boolean;
+    buildResult?: ICompilationBaseResult;
 }
 
 export interface ICompilerDetails {
