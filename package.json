@@ -1,6 +1,6 @@
 {
-  "name": "compilerexplorer-api",
-  "version": "0.0.1",
+  "name": "@partouf/compilerexplorer-api",
+  "version": "0.0.2",
   "description": "",
   "main": "dist/exports.js",
   "types": "dist/exports.d.ts",
@@ -8,19 +8,19 @@
     "doc": "docs"
   },
   "scripts": {
+    "prepare": "tsc",
     "lint": "eslint *.ts"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/partouf/node-compilerexplorer-api.git"
   },
-  "author": "",
+  "author": "partouf",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/partouf/node-compilerexplorer-api/issues"
   },
   "homepage": "https://github.com/partouf/node-compilerexplorer-api#readme",
-  "prepublish": "tsc",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
