@@ -61,6 +61,7 @@ export interface ICompilerDetails {
     semver: string;
     supportsExecute: boolean;
     name: string;
+    lang: string;
 }
 
 export interface ICompileApiPostDataOptions {
@@ -91,9 +92,16 @@ export interface ICompilers {
     find(name: string, version: string): Promise<ICompiler>;
 }
 
+export enum APIType {
+    JSON,
+    Text,
+    Form,
+}
+
 export interface IApiOptions {
     url: string;
     defaultLanguage: string;
+    apiType?: APIType;
 }
 
 export interface IApi {
