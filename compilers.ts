@@ -4,17 +4,16 @@ import http from "http";
 import https from "https";
 
 export class Compilers implements ICompilers {
-    private _list: Array<ICompiler> = [];
+    private _list: Promise<Array<ICompiler>>;
     private web: typeof https | typeof http;
-    private busyLoading = false;
 
     constructor(public apiOptions: IApiOptions) {
         this.web = this.apiOptions.url.startsWith('https://') ? https : http;
+        this._list = this.load();
     }
 
-    private async load(): Promise<void> {
-        this.busyLoading = true;
-        return new Promise<void>((resolve, reject) => {
+    private load(): Promise<Array<ICompiler>> {
+        return new Promise((resolve, reject) => {
             this.web.get(`${this.apiOptions.url}/api/compilers/${encodeURIComponent(this.apiOptions.defaultLanguage)}`, {
                 headers: {
                     Accept: 'application/json'
@@ -24,34 +23,43 @@ export class Compilers implements ICompilers {
                 resp.on('data', (chunk: string) => data += chunk);
                 resp.on('end', () => {
                     const jsdata = JSON.parse(data);
+                    const list = [];
                     for (const details of jsdata) {
                         const compiler = new Compiler(this.apiOptions, details);
-                        this._list.push(compiler);
+                        list.push(compiler);
                     }
-                    this.busyLoading = false;
-                    resolve();
+                    resolve(list);
                 });
             }).on('error', (err) => {
                 console.error(err);
-                this.busyLoading = false;
                 reject(err);
             });
         });
     }
 
     public async list(): Promise<Array<ICompiler>> {
-        if (!this.busyLoading && (this._list.length === 0)) {
-            await this.load();
-        }
+        const list = await this._list;
 
         return this._list;
     }
 
     public async find(name: string, version: string): Promise<ICompiler> {
-        await this.list();
+        const list = await this.list();
 
-        for (const compiler of this._list) {
+        for (const compiler of list) {
             if ((compiler.type === name) && (compiler.version === version)) {
+                return compiler;
+            }
+        }
+
+        throw "Compiler not found";
+    }
+
+    public async findById(id: string): Promise<ICompiler> {
+        const list = await this.list();
+
+        for (const compiler of list) {
+            if (compiler.id === id) {
                 return compiler;
             }
         }

@@ -90,6 +90,7 @@ export interface ICompiler {
 export interface ICompilers {
     list(): Promise<Array<ICompiler>>;
     find(name: string, version: string): Promise<ICompiler>;
+    findById(id: string): Promise<ICompiler>;
 }
 
 export enum APIType {
