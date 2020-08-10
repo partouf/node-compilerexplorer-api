@@ -90,7 +90,8 @@ export class Compiler implements ICompiler {
             result.buildResult = {
                 code: 0,
                 stdout: [],
-                stderr: []
+                stderr: [],
+                asm: []
             } as ICompilationBaseResult;
         }
 
