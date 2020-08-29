@@ -1,6 +1,6 @@
 {
   "name": "@partouf/compilerexplorer-api",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "",
   "main": "dist/exports.js",
   "types": "dist/exports.d.ts",

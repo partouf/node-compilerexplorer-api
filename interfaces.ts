@@ -64,11 +64,17 @@ export interface ICompilerDetails {
     lang: string;
 }
 
+export interface ILibrary {
+    id: string;
+    version: string;
+}
+
 export interface ICompileApiPostDataOptions {
     userArguments: string;
     compilerOptions: ICompilerOptions;
     filters: ICompilerFilters;
     executeParameters?: IExecuteParameters;
+    libraries?: Array<ILibrary>;
 }
 
 export interface ICompileApiPostData {
@@ -83,8 +89,8 @@ export interface ICompiler {
     name: string;
     version: string;
     supportsExecution(): boolean;
-    compile(code: string, compilerArgs?: Array<string>, options?: ICompilerOptions, filters?: ICompilerFilters, execParams?: IExecuteParameters): Promise<ICompilationResult>;
-    execute(code: string, compilerArgs?: string[], execParams?: IExecuteParameters): Promise<ICompilationResult>;
+    compile(code: string, compilerArgs?: string[], options?: ICompilerOptions, filters?: ICompilerFilters, libraries?: ILibrary[], execParams?: IExecuteParameters): Promise<ICompilationResult>;
+    execute(code: string, compilerArgs?: string[], libraries?: ILibrary[], execParams?: IExecuteParameters): Promise<ICompilationResult>;
 }
 
 export interface ICompilers {

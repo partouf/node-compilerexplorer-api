@@ -1,5 +1,6 @@
 import { ICompiler, ICompilerOptions, ICompilerFilters, ICompilationResult, IApiOptions, ICompilerDetails,
-    ICompileApiPostData, ICompileApiPostDataOptions, IExecuteParameters, IResultLine, APIType, IResultAsmLine, ICompilationBaseResult } from "./interfaces";
+    ICompileApiPostData, ICompileApiPostDataOptions, IExecuteParameters, IResultLine, APIType, IResultAsmLine,
+    ICompilationBaseResult, ILibrary } from "./interfaces";
 import http from "http";
 import https from "https";
 
@@ -237,14 +238,15 @@ export class Compiler implements ICompiler {
         });
     }
 
-    public async compile(code: string, compilerArgs?: string[], options?: ICompilerOptions, filters?: ICompilerFilters, execParams?: IExecuteParameters): Promise<ICompilationResult> {
+    public async compile(code: string, compilerArgs?: string[], options?: ICompilerOptions, filters?: ICompilerFilters, libraries?: ILibrary[], execParams?: IExecuteParameters): Promise<ICompilationResult> {
         const postdata: ICompileApiPostData = {
             source: code,
             compiler: this.id,
             options: {
                 userArguments: "",
                 compilerOptions: {} as ICompilerOptions,
-                filters: {} as ICompilerFilters
+                filters: {} as ICompilerFilters,
+                libraries: [] as ILibrary[],
             } as ICompileApiPostDataOptions
         };
 
@@ -252,6 +254,7 @@ export class Compiler implements ICompiler {
         if (options) postdata.options.compilerOptions = options;
         if (filters) postdata.options.filters = filters;
         if (execParams) postdata.options.executeParameters = execParams;
+        if (libraries) postdata.options.libraries = libraries;
 
         switch (this.apiOptions.apiType) {
             case APIType.JSON:
@@ -269,12 +272,14 @@ export class Compiler implements ICompiler {
         }
     }
 
-    public async execute(code: string, compilerArgs?: string[], execParams?: IExecuteParameters): Promise<ICompilationResult> {
+    public async execute(code: string, compilerArgs?: string[], libraries?: ILibrary[], execParams?: IExecuteParameters): Promise<ICompilationResult> {
         return this.compile(code, compilerArgs, {
             skipAsm: true,
             executorRequest: true
         }, {
             execute: true
-        }, execParams);
+        },
+        libraries,
+        execParams);
     }
 }
