@@ -88,6 +88,7 @@ export interface ICompiler {
     type: string;
     name: string;
     version: string;
+    apiOptions: IApiOptions;
     supportsExecution(): boolean;
     compile(code: string, compilerArgs?: string[], options?: ICompilerOptions, filters?: ICompilerFilters, libraries?: ILibrary[], execParams?: IExecuteParameters): Promise<ICompilationResult>;
     execute(code: string, compilerArgs?: string[], libraries?: ILibrary[], execParams?: IExecuteParameters): Promise<ICompilationResult>;

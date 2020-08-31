@@ -2,6 +2,7 @@ import { ICompilers, ICompiler, IApiOptions } from "./interfaces";
 import { Compiler } from "./compiler";
 import http from "http";
 import https from "https";
+import parseJson from "parse-json";
 
 export class Compilers implements ICompilers {
     private _list: Promise<Array<ICompiler>>;
@@ -22,12 +23,13 @@ export class Compilers implements ICompilers {
                 let data = "";
                 resp.on('data', (chunk: string) => data += chunk);
                 resp.on('end', () => {
-                    const jsdata = JSON.parse(data);
+                    const jsdata = parseJson(data);
                     const list = [];
                     for (const details of jsdata) {
                         const compiler = new Compiler(this.apiOptions, details);
                         list.push(compiler);
                     }
+                    data = "";
                     resolve(list);
                 });
             }).on('error', (err) => {
@@ -40,7 +42,7 @@ export class Compilers implements ICompilers {
     public async list(): Promise<Array<ICompiler>> {
         const list = await this._list;
 
-        return this._list;
+        return list;
     }
 
     public async find(name: string, version: string): Promise<ICompiler> {
