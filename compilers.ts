@@ -15,7 +15,8 @@ export class Compilers implements ICompilers {
 
     private load(): Promise<Array<ICompiler>> {
         return new Promise((resolve, reject) => {
-            this.web.get(`${this.apiOptions.url}/api/compilers/${encodeURIComponent(this.apiOptions.defaultLanguage)}`, {
+            const fields = "id,name,lang,type,semver,supportsExecute";
+            this.web.get(`${this.apiOptions.url}/api/compilers/${encodeURIComponent(this.apiOptions.defaultLanguage)}?fields=${fields}`, {
                 headers: {
                     Accept: 'application/json'
                 }
