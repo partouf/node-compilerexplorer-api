@@ -5,7 +5,9 @@ export interface ICompilerOptions {
 
 export interface ICompilerFilters {
     binary?: boolean;
+    binaryObject?: boolean;
     commentOnly?: boolean;
+    debugCalls?: boolean;
     demangle?: boolean;
     directives?: boolean;
     execute?: boolean;
