@@ -96,7 +96,7 @@ export class Compiler implements ICompiler {
             } as ICompilationBaseResult;
         }
 
-        for (let line of data.split('\n')) {
+        for (const line of data.split('\n')) {
             if (!executionExitCodeSeen) {
                 const exitCodeMatches = this.regexTextExecuteExitCode.exec(line);
                 if (exitCodeMatches && exitCodeMatches[1]) {
@@ -159,7 +159,9 @@ export class Compiler implements ICompiler {
         return new Promise((resolve, reject) => {
             let filtersstr = "";
             if (postdata.options.filters.binary) filtersstr += ",binary";
+            if (postdata.options.filters.binaryObject) filtersstr += ",binaryObject";
             if (postdata.options.filters.commentOnly) filtersstr += ",commentOnly";
+            if (postdata.options.filters.debugCalls) filtersstr += ",debugCalls";
             if (postdata.options.filters.demangle) filtersstr += ",demangle";
             if (postdata.options.filters.directives) filtersstr += ",directives";
             if (postdata.options.filters.execute) filtersstr += ",execute";
@@ -203,7 +205,9 @@ export class Compiler implements ICompiler {
             postdatastr += "&source=" + encodeURIComponent(postdata.source);
 
             if (postdata.options.filters.binary) postdatastr += "&binary=true";
+            if (postdata.options.filters.binaryObject) postdatastr += "&binaryObject=true";
             if (postdata.options.filters.commentOnly) postdatastr += "&commentOnly=true";
+            if (postdata.options.filters.debugCalls) postdatastr += "&debugCalls=true";
             if (postdata.options.filters.demangle) postdatastr += "&demangle=true";
             if (postdata.options.filters.directives) postdatastr += "&directives=true";
             if (postdata.options.filters.execute) postdatastr += "&execute=true";
